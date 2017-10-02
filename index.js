@@ -6,7 +6,16 @@ var BUTTON_VALUE_MAPPER = ['Not Pressed', 'Pressed', 'Long Press'];
 
 console.log('*** BBC micro:bit Scratch extension ***')
 
-var io = require('socket.io')();
+var http = require('http'),
+    fs = require('fs'),
+    index = fs.readFileSync(__dirname + '/scratch_microbit.js');
+
+var app = http.createServer(function(req, res) {
+    res.writeHead(200, {'Content-Type': 'application/javascript'});
+    res.end(index);
+});
+
+var io = require('socket.io').listen(app.listen(3000));
 
 io.on('connection', function(socket) {
   console.log('socket: connected');
@@ -15,7 +24,7 @@ io.on('connection', function(socket) {
   socket.emit('microbit: connected', microbitConnected);
 });
 
-io.listen(3000);
+
 console.log('socket: listening');
 
 function microbitFound(microbit) {
