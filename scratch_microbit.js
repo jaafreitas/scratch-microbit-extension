@@ -94,11 +94,18 @@
 
   function setupPin(pin, ADmode, IOmode) {
     if ((microbitConnected) && (!pinSetup[pin])) {
-      console.log('microbit: pinSetup %d, type %s, read %s', pin, ADmode, IOmode);
+      console.log('microbit: pinSetup %s, ADmode %s, IOmode %s', pin, ADmode, IOmode);
       socket.emit('pinSetup', {'pin': pin, 'ADmode': ADmode, 'IOmode': IOmode});
       pinSetup[pin] = true;
     };
   };
+
+  function pinWrite(pin, value) {
+    if (microbitConnected) {
+      console.log('microbit: pinWrite %s, value %s', pin, value);
+      socket.emit('pinWrite', {'pin': pin, 'value': value});
+    };
+  }
 
   ext.resetPins = function() {
     initValues();
@@ -114,18 +121,33 @@
     return pinValue[pin];
   };
 
+  ext.analogWritePin = function(pin, value) {
+    setupPin(pin, 'analog', 'output');
+    pinWrite(pin, value);
+  };
+
+  ext.digitalWritePin = function(pin, value) {
+    setupPin(pin, 'digital', 'output');
+    // We don't want to deal with translation issues.
+    value = (value == menus.digitalPinValues[1]);
+    pinWrite(pin, value);
+  };
+
   var blocks = [
     ['h', 'when %m.btns button pressed', 'whenButtonPressed', 'A'],
     ['', 'reset pins', 'resetPins'],
-    ['r', 'analog read pin %d.analogPins', 'analogReadPin', '0'],
-    ['b', 'digital read pin %d.digitalPins', 'digitalReadPin', '0']
+    ['r', 'analog read pin %m.analogPins', 'analogReadPin', 0],
+    ['b', 'digital read pin %m.digitalPins', 'digitalReadPin', 0],
+    ['', 'analog write pin %m.analogPins to %d', 'analogWritePin', 0, 255],
+    ['', 'digital write pin %m.digitalPins to %d.digitalPinValues', 'digitalWritePin', 0, 'on']
   ];
 
   var menus = {
     btns: ['A', 'B', 'any'],
     // there are no pins 17 and 18.
     analogPins: [0, 1, 2, 3, 4, 10],
-    digitalPins: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 19, 20]
+    digitalPins: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 19, 20],
+    digitalPinValues: ['off', 'on']
   };
 
   var descriptor = {

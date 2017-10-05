@@ -44,27 +44,52 @@ io.on('connection', function(socket) {
     console.log('socket: pinSetup');
 
     if (device) {
+      function log(data) {
+        console.log('microbit: setup pin %d as %s %s',
+          data.pin, data.ADmode, data.IOmode);
+      }
+
+      function subscribe(device, data) {
+        device.subscribePinData(function() {
+          log(data);
+          // It will trigger a pinDataChange.
+          device.readPin(data.pin);
+        });
+      };
+
       if (data.IOmode == 'input') {
-        device.pinInput(data.pin, function() {
-          function subscribe(socket, device, data) {
-            device.subscribePinData(function() {
-              console.log('microbit: setup pin %d as %s %s',
-                data.pin, data.ADmode, data.IOmode);
-              // It will trigger a pinDataChagen.
-              device.readPin(data.pin);
-            });
-          };
+        device.pinInput(data.pin, function(error) {
           if (data.ADmode == 'analog') {
             device.pinAnalog(data.pin, function(error) {
-              subscribe(socket, device, data);
+              subscribe(device, data);
             });
           } else {
             device.pinDigital(data.pin, function(error) {
-              subscribe(socket, device, data);
+              subscribe(device, data);
+            });
+          };
+        });
+      } else {
+        device.pinOutput(data.pin, function(error) {
+          if (data.ADmode == 'analog') {
+            device.pinAnalog(data.pin, function(error) {
+              log(data);
+            });
+          } else {
+            device.pinDigital(data.pin, function(error) {
+              log(data);
             });
           };
         });
       };
+    };
+  });
+
+  socket.on('pinWrite', function(data) {
+    if (device) {
+      device.writePin(data.pin, Math.min(data.value, 255), function(error) {
+        console.log('microbit: < pin %d, value %d', data.pin, data.value);
+      });
     };
   });
 });
@@ -91,7 +116,7 @@ function microbitFound(microbit) {
   });
 
   microbit.on('pinDataChange', function(pin, value) {
-    console.log('microbit: pin %d, value %d', pin, value);
+    console.log('microbit: > pin %d, value %d', pin, value);
     io.sockets.emit('microbit: pin', { 'pin': pin, 'value': value });
   });
 
