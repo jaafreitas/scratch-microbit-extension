@@ -135,6 +135,11 @@ function microbitFound(microbit) {
     io.sockets.emit('microbit: temperature', value);
   });
 
+  microbit.on('magnetometerBearingChange', function(value) {
+    // console.log('microbit: magnetometer bearing %d', value);
+    io.sockets.emit('microbit: magnetometer bearing', value);
+  });
+
   console.log('microbit: connecting...');
   microbit.connectAndSetUp(function() {
     microbitConnected = true;
@@ -147,6 +152,10 @@ function microbitFound(microbit) {
 
     microbit.subscribeTemperature(function(error) {
       console.log('microbit: subscribed to temperature');
+    });
+
+    microbit.subscribeMagnetometerBearing(function(error) {
+      console.log('microbit: subscribed to magnetometer bearing');
     });
 
     io.sockets.emit('microbit: connected', microbitConnected);
