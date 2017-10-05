@@ -144,6 +144,13 @@
     return temperature;
   }
 
+  ext.display = function(value) {
+    if (microbitConnected) {
+      console.log('microbit: display %s', value);
+      socket.emit('display', value);
+    };
+  };
+
   var blocks = [
     ['h', 'when %m.btns button pressed', 'whenButtonPressed', 'A'],
     ['', 'reset pins', 'resetPins'],
@@ -151,7 +158,8 @@
     ['b', 'digital read pin %m.digitalPins', 'digitalReadPin', 0],
     ['', 'analog write pin %m.analogPins to %d', 'analogWritePin', 0, 255],
     ['', 'digital write pin %m.digitalPins to %d.digitalPinValues', 'digitalWritePin', 0, 'on'],
-    ['r', 'temperature', 'temperature']
+    ['r', 'temperature', 'temperature'],
+    ['', 'display %s', 'display', '?']
   ];
 
   var menus = {

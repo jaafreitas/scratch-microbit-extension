@@ -92,6 +92,16 @@ io.on('connection', function(socket) {
       });
     };
   });
+
+  socket.on('display', function(value) {
+    if (device) {
+      // The string has to be 20 characters or less.
+      // https://github.com/sandeepmistry/node-bbc-microbit/blob/master/API.md#write-text
+      device.writeLedText(value.substring(0, 20), function(error) {
+        console.log('microbit: display %s', value);
+      });
+    };
+  });
 });
 
 function microbitFound(microbit) {
