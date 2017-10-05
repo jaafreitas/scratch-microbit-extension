@@ -12,6 +12,7 @@
   var pinSetup = null;
   var temperature = null;
   var magnetometerBearing = null;
+  var magnetometer = null;
 
   function initValues () {
     buttonState = {A: 0, B: 0};
@@ -23,6 +24,7 @@
     ];
     temperature = 0;
     magnetometerBearing = 0;
+    magnetometer = { 'x': 0, 'y': 0, 'z': 0 };
   }
   initValues();
 
@@ -85,6 +87,11 @@
     socket.on('microbit: magnetometer bearing', function(value) {
       // console.log('microbit: magnetometer bearing %d', value);
       magnetometerBearing = value;
+    });
+
+    socket.on('microbit: magnetometer', function(data) {
+      // console.log('microbit: magnetometer %s, %s, %s', data.x, data.y, data.z);
+      magnetometer = data;
     });
   }
 
@@ -155,6 +162,10 @@
     return magnetometerBearing;
   }
 
+  ext.magnetometer = function(axis) {
+    return magnetometer[axis];
+  }
+
   ext.display = function(value) {
     if (microbitConnected) {
       console.log('microbit: display %s', value);
@@ -171,6 +182,7 @@
     ['', 'digital write pin %m.digitalPins to %d.digitalPinValues', 'digitalWritePin', 0, 'on'],
     ['r', 'temperature', 'temperature'],
     ['r', 'magnetometer bearing', 'magnetometerBearing'],
+    ['r', 'magnetometer %m.magnetometerAxis', 'magnetometer', 'x'],
     ['', 'display %s', 'display', '?']
   ];
 
@@ -179,7 +191,8 @@
     // there are no pins 17 and 18.
     analogPins: [0, 1, 2, 3, 4, 10],
     digitalPins: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 19, 20],
-    digitalPinValues: ['off', 'on']
+    digitalPinValues: ['off', 'on'],
+    magnetometerAxis: ['x', 'y', 'z']
   };
 
   var descriptor = {
