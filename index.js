@@ -1,4 +1,5 @@
 var BBCMicrobit = require('bbc-microbit');
+var device = null;
 const fs = require('fs');
 const path = require('path');
 
@@ -31,22 +32,49 @@ var app = http.createServer(function(req, res) {
 });
 
 var io = require('socket.io').listen(app.listen(3000));
+console.log('socket: listening');
 
 io.on('connection', function(socket) {
   console.log('socket: connected');
 
   socket.emit('socket: connected');
   socket.emit('microbit: connected', microbitConnected);
+
+  socket.on('pinSetup', function(data) {
+    console.log('socket: pinSetup');
+
+    if (device) {
+      if (data.IOmode == 'input') {
+        device.pinInput(data.pin, function() {
+          function subscribe(socket, device, data) {
+            device.subscribePinData(function() {
+              console.log('microbit: setup pin %d as %s %s',
+                data.pin, data.ADmode, data.IOmode);
+              // It will trigger a pinDataChagen.
+              device.readPin(data.pin);
+            });
+          };
+          if (data.ADmode == 'analog') {
+            device.pinAnalog(data.pin, function(error) {
+              subscribe(socket, device, data);
+            });
+          } else {
+            device.pinDigital(data.pin, function(error) {
+              subscribe(socket, device, data);
+            });
+          };
+        });
+      };
+    };
+  });
 });
-
-
-console.log('socket: listening');
 
 function microbitFound(microbit) {
   console.log('microbit: discovered %s', microbit.address);
 
   microbit.on('disconnect', function() {
     microbitConnected = false;
+    device = null;
     console.log('microbit: connected ' + microbitConnected);
     io.sockets.emit('microbit: connected', microbitConnected);
     microbitScanner();
@@ -62,10 +90,17 @@ function microbitFound(microbit) {
     io.sockets.emit('microbit: button B', value);
   });
 
+  microbit.on('pinDataChange', function(pin, value) {
+    console.log('microbit: pin %d, value %d', pin, value);
+    io.sockets.emit('microbit: pin', { 'pin': pin, 'value': value });
+  });
+
   console.log('microbit: connecting...');
   microbit.connectAndSetUp(function() {
     microbitConnected = true;
+    device = microbit;
     console.log('microbit: connected ' + microbitConnected);
+
     console.log('microbit: subscribing to buttons...');
     microbit.subscribeButtons(function() {
       console.log('microbit: subscribed to buttons');

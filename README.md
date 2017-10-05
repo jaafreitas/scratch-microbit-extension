@@ -11,10 +11,13 @@ node -e "var fs = require('fs'), `
 node index.js
 ```
 
-Go to http://scratchx.org/, chose Open Extension URL and paste https://jaafreitas.github.io/scratch-microbit-extension/scratch_microbit.js
+Go to http://scratchx.org/, choose Open Extension URL and paste https://jaafreitas.github.io/scratch-microbit-extension/scratch_microbit.js
 
 
 if you are running a local instance of ScratchX, choose http://localhost:3000/scratch_microbit.js
 
 Read the following bug for more information on how to use extensions locally:
 https://github.com/LLK/scratchx/issues/133
+
+Watch out for the analog read bug:
+https://github.com/sandeepmistry/node-bbc-microbit/issues/18
