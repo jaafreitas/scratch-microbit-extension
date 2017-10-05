@@ -39,6 +39,12 @@ io.on('connection', function(socket) {
 
   socket.emit('socket: connected');
   socket.emit('microbit: connected', microbitConnected);
+  if (device) {
+    device.readDeviceName(function(error, deviceName) {
+      console.log('microbit: ' + deviceName);
+      socket.emit('microbit: name', deviceName);
+    })
+  };
 
   socket.on('pinSetup', function(data) {
     console.log('socket: pinSetup');
@@ -183,6 +189,10 @@ function microbitFound(microbit) {
     });
 
     io.sockets.emit('microbit: connected', microbitConnected);
+    microbit.readDeviceName(function(error, deviceName) {
+      console.log('microbit: ' + deviceName);
+      io.sockets.emit('microbit: name', deviceName);
+    })
   });
 };
 

@@ -2,6 +2,7 @@
   var socket = null;
   var socketConnected = false;
   var microbitConnected = false;
+  var microbitDeviceName = null;
 
   const BTN_UP = 0,
     BTN_DOWN = 1,
@@ -83,6 +84,12 @@
       initValues();
       console.log('microbit: connected ' + microbitConnected);
     });
+
+    socket.on('microbit: name', function(value) {
+      microbitDeviceName = value;
+      console.log('microbit: %s', value);
+    });
+
 
     socket.on('microbit: button A', function(status) {
       console.log('microbit: button A ' + status);
@@ -214,6 +221,10 @@
     };
   };
 
+  ext.deviceName = function(axis) {
+    return microbitDeviceName;
+  }
+
   var blocks = [
     ['h', 'when %m.btns button pressed', 'whenButtonPressed', 'A'],
     ['', 'display %s', 'display', '?'],
@@ -228,7 +239,8 @@
     ['r', 'magnetometer bearing', 'magnetometerBearing'],
     ['r', 'magnetometer %m.Axis', 'magnetometer', 'x'],
     ['r', 'compass', 'compass'],
-    ['r', 'accelerometer %m.Axis', 'accelerometer', 'x']
+    ['r', 'accelerometer %m.Axis', 'accelerometer', 'x'],
+    ['r', 'name', 'deviceName']
   ];
 
   var menus = {
