@@ -120,17 +120,26 @@ function microbitFound(microbit) {
     io.sockets.emit('microbit: pin', { 'pin': pin, 'value': value });
   });
 
+  microbit.on('temperatureChange', function(value) {
+    // console.log('microbit: temperature %d', value);
+    io.sockets.emit('microbit: temperature', value);
+  });
+
   console.log('microbit: connecting...');
   microbit.connectAndSetUp(function() {
     microbitConnected = true;
     device = microbit;
     console.log('microbit: connected ' + microbitConnected);
 
-    console.log('microbit: subscribing to buttons...');
-    microbit.subscribeButtons(function() {
+    microbit.subscribeButtons(function(error) {
       console.log('microbit: subscribed to buttons');
-      io.sockets.emit('microbit: connected', microbitConnected);
     });
+
+    microbit.subscribeTemperature(function(error) {
+      console.log('microbit: subscribed to temperature');
+    });
+
+    io.sockets.emit('microbit: connected', microbitConnected);
   });
 };
 

@@ -10,6 +10,7 @@
   var buttonState = null;
   var pinValue = null;
   var pinSetup = null;
+  var temperature = null;
 
   function initValues () {
     buttonState = {A: 0, B: 0};
@@ -19,6 +20,7 @@
       false, false, false, false, false, false, false, false, false, false, false,
       false, false, false, false, false, false, false, false, false, false
     ];
+    temperature = 0;
   }
   initValues();
 
@@ -71,6 +73,11 @@
     socket.on('microbit: pin', function(data) {
       console.log('microbit: pin %d, value %d', data.pin, data.value);
       pinValue[data.pin] = data.value;
+    });
+
+    socket.on('microbit: temperature', function(value) {
+      // console.log('microbit: temperature %d', value);
+      temperature = value;
     });
   }
 
@@ -133,13 +140,18 @@
     pinWrite(pin, value);
   };
 
+  ext.temperature = function() {
+    return temperature;
+  }
+
   var blocks = [
     ['h', 'when %m.btns button pressed', 'whenButtonPressed', 'A'],
     ['', 'reset pins', 'resetPins'],
     ['r', 'analog read pin %m.analogPins', 'analogReadPin', 0],
     ['b', 'digital read pin %m.digitalPins', 'digitalReadPin', 0],
     ['', 'analog write pin %m.analogPins to %d', 'analogWritePin', 0, 255],
-    ['', 'digital write pin %m.digitalPins to %d.digitalPinValues', 'digitalWritePin', 0, 'on']
+    ['', 'digital write pin %m.digitalPins to %d.digitalPinValues', 'digitalWritePin', 0, 'on'],
+    ['r', 'temperature', 'temperature']
   ];
 
   var menus = {
