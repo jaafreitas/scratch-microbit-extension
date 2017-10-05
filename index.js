@@ -148,6 +148,14 @@ function microbitFound(microbit) {
     io.sockets.emit('microbit: magnetometer', { 'x': x, 'y': y, 'z': z });
   });
 
+  microbit.on('accelerometerChange', function(x, y, z) {
+    x = x.toFixed(1);
+    y = y.toFixed(1);
+    z = z.toFixed(1);
+    // console.log('microbit: accelerometer %d, %d, %d', x, y, z);
+    io.sockets.emit('microbit: accelerometer', { 'x': x, 'y': y, 'z': z });
+  });
+
   console.log('microbit: connecting...');
   microbit.connectAndSetUp(function() {
     microbitConnected = true;
@@ -168,6 +176,10 @@ function microbitFound(microbit) {
 
     microbit.subscribeMagnetometer(function(error) {
       console.log('microbit: subscribed to magnetometer');
+    });
+
+    microbit.subscribeAccelerometer(function(error) {
+      console.log('microbit: subscribed to accelerometer');
     });
 
     io.sockets.emit('microbit: connected', microbitConnected);

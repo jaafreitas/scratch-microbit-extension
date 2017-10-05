@@ -3,7 +3,7 @@
   var socketConnected = false;
   var microbitConnected = false;
 
-  var BTN_UP = 0,
+  const BTN_UP = 0,
     BTN_DOWN = 1,
     BTN_HELD = 2;
 
@@ -13,7 +13,8 @@
   var temperature = null;
   var magnetometerBearing = null;
   var magnetometer = null;
-  var compassPoint = [
+  var accelerometer = null;
+  const compassPoint = [
     "N",
     "NNE",
     "NE",
@@ -43,6 +44,7 @@
     temperature = 0;
     magnetometerBearing = 0;
     magnetometer = { 'x': 0, 'y': 0, 'z': 0 };
+    accelerometer = { 'x': 0, 'y': 0, 'z': 0 };
   }
   initValues();
 
@@ -110,6 +112,11 @@
     socket.on('microbit: magnetometer', function(data) {
       // console.log('microbit: magnetometer %s, %s, %s', data.x, data.y, data.z);
       magnetometer = data;
+    });
+
+    socket.on('microbit: accelerometer', function(data) {
+      // console.log('microbit: accelerometer %s, %s, %s', data.x, data.y, data.z);
+      accelerometer = data;
     });
   }
 
@@ -184,6 +191,10 @@
     return magnetometer[axis];
   }
 
+  ext.accelerometer = function(axis) {
+    return accelerometer[axis];
+  }
+
   ext.compass = function() {
     var d = magnetometerBearing / (360 / 16);
     var nameIndex = Math.floor(d);
@@ -205,16 +216,19 @@
 
   var blocks = [
     ['h', 'when %m.btns button pressed', 'whenButtonPressed', 'A'],
-    ['', 'reset pins', 'resetPins'],
+    ['', 'display %s', 'display', '?'],
+    [' '],
     ['r', 'analog read pin %m.analogPins', 'analogReadPin', 0],
     ['b', 'digital read pin %m.digitalPins', 'digitalReadPin', 0],
     ['', 'analog write pin %m.analogPins to %d', 'analogWritePin', 0, 255],
     ['', 'digital write pin %m.digitalPins to %d.digitalPinValues', 'digitalWritePin', 0, 'on'],
+    ['', 'reset pins', 'resetPins'],
+    [' '],
     ['r', 'temperature', 'temperature'],
     ['r', 'magnetometer bearing', 'magnetometerBearing'],
-    ['r', 'magnetometer %m.magnetometerAxis', 'magnetometer', 'x'],
+    ['r', 'magnetometer %m.Axis', 'magnetometer', 'x'],
     ['r', 'compass', 'compass'],
-    ['', 'display %s', 'display', '?']
+    ['r', 'accelerometer %m.Axis', 'accelerometer', 'x']
   ];
 
   var menus = {
@@ -223,7 +237,7 @@
     analogPins: [0, 1, 2, 3, 4, 10],
     digitalPins: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 19, 20],
     digitalPinValues: ['off', 'on'],
-    magnetometerAxis: ['x', 'y', 'z']
+    Axis: ['x', 'y', 'z']
   };
 
   var descriptor = {
