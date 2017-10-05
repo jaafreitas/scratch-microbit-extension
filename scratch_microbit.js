@@ -9,6 +9,7 @@
     BTN_HELD = 2;
 
   var buttonState = null;
+  var matrixState = null;
   var pinValue = null;
   var pinSetup = null;
   var temperature = null;
@@ -36,6 +37,7 @@
 
   function initValues () {
     buttonState = {A: 0, B: 0};
+    matrixState = [0, 0, 0, 0, 0];
     // The array has space for P0 to P20 (including P17 and P18).
     pinValue = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     pinSetup = [
@@ -221,25 +223,61 @@
     };
   };
 
+  plotUnPlotLED = function(x, y, plot) {
+    x = parseInt(x);
+    if (isNaN(x) | x < 0 | x > 4) return;
+    y = parseInt(y);
+    if (isNaN(y) | y < 0 | y > 4) return;
+    if (plot) {
+      matrixState[y] |= 1 << 4 - x;
+    } else {
+      matrixState[y] &= ~(1 << 4 - x);
+    }
+    // console.log('microbit: display matrix %s', (matrixState[y] >>> 0).toString(2));
+    socket.emit('displayMatrix', matrixState);
+  };
+
+  ext.plotLED = function(x, y) {
+    plotUnPlotLED(x, y, true);
+  };
+
+  ext.unplotLED = function(x, y) {
+    plotUnPlotLED(x, y, false);
+  };
+
+  ext.pointLED = function(x, y) {
+    return matrixState[y] >> (4 - x) & 1;
+  }
+
+  ext.clearDisplay = function() {
+    matrixState = [0, 0, 0, 0, 0];
+    socket.emit('displayMatrix', matrixState);
+  }
+
   ext.deviceName = function(axis) {
     return microbitDeviceName;
-  }
+  };
 
   var blocks = [
     ['h', 'when %m.btns button pressed', 'whenButtonPressed', 'A'],
-    ['', 'display %s', 'display', '?'],
+    [' '],
+    [' ', 'display %s', 'display', '?'],
+    [' ', 'plot x %d.rowcol y %d.rowcol', 'plotLED', 0, 0],
+    [' ', 'unplot x %d.rowcol y %d.rowcol', 'unplotLED', 0, 0],
+    ['r', 'point x %d.rowcol y %d.rowcol', 'pointLED', 0, 0],
+    [' ', 'clear display', 'clearDisplay'],
     [' '],
     ['r', 'analog read pin %m.analogPins', 'analogReadPin', 0],
     ['b', 'digital read pin %m.digitalPins', 'digitalReadPin', 0],
-    ['', 'analog write pin %m.analogPins to %d', 'analogWritePin', 0, 255],
-    ['', 'digital write pin %m.digitalPins to %d.digitalPinValues', 'digitalWritePin', 0, 'on'],
-    ['', 'reset pins', 'resetPins'],
+    [' ', 'analog write pin %m.analogPins to %d', 'analogWritePin', 0, 255],
+    [' ', 'digital write pin %m.digitalPins to %m.digitalPinValues', 'digitalWritePin', 0, 'on'],
+    [' ', 'reset pins', 'resetPins'],
     [' '],
     ['r', 'temperature', 'temperature'],
     ['r', 'magnetometer bearing', 'magnetometerBearing'],
-    ['r', 'magnetometer %m.Axis', 'magnetometer', 'x'],
+    ['r', 'magnetometer %m.axis', 'magnetometer', 'x'],
     ['r', 'compass', 'compass'],
-    ['r', 'accelerometer %m.Axis', 'accelerometer', 'x'],
+    ['r', 'accelerometer %m.axis', 'accelerometer', 'x'],
     ['r', 'name', 'deviceName']
   ];
 
@@ -249,7 +287,8 @@
     analogPins: [0, 1, 2, 3, 4, 10],
     digitalPins: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 19, 20],
     digitalPinValues: ['off', 'on'],
-    Axis: ['x', 'y', 'z']
+    axis: ['x', 'y', 'z'],
+    rowcol: [0, 1, 2, 3, 4]
   };
 
   var descriptor = {

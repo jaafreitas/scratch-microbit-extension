@@ -108,6 +108,13 @@ io.on('connection', function(socket) {
       });
     };
   });
+
+  socket.on('displayMatrix', function(value) {
+    if (device) {
+      matrix = new Buffer(value, 'hex');
+      device.writeLedMatrixState(matrix);
+    };
+  });
 });
 
 function microbitFound(microbit) {
