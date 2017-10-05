@@ -13,6 +13,24 @@
   var temperature = null;
   var magnetometerBearing = null;
   var magnetometer = null;
+  var compassPoint = [
+    "N",
+    "NNE",
+    "NE",
+    "ENE",
+    "E",
+    "ESE",
+    "SE",
+    "SSE",
+    "S",
+    "SSW",
+    "SW",
+    "WSW",
+    "W",
+    "WNW",
+    "NW",
+    "NNW"
+  ];
 
   function initValues () {
     buttonState = {A: 0, B: 0};
@@ -166,6 +184,18 @@
     return magnetometer[axis];
   }
 
+  ext.compass = function() {
+    var d = magnetometerBearing / (360 / 16);
+    var nameIndex = Math.floor(d);
+    if (d - nameIndex > 0.5) {
+        nameIndex++;
+    }
+    if (nameIndex > 15) {
+        nameIndex = 0;
+    }
+    return compassPoint[nameIndex];
+  }
+
   ext.display = function(value) {
     if (microbitConnected) {
       console.log('microbit: display %s', value);
@@ -183,6 +213,7 @@
     ['r', 'temperature', 'temperature'],
     ['r', 'magnetometer bearing', 'magnetometerBearing'],
     ['r', 'magnetometer %m.magnetometerAxis', 'magnetometer', 'x'],
+    ['r', 'compass', 'compass'],
     ['', 'display %s', 'display', '?']
   ];
 
