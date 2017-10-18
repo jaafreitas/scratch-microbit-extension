@@ -258,42 +258,88 @@
     return microbitDeviceName;
   };
 
-  var blocks = [
-    ['h', 'when %m.btns button pressed', 'whenButtonPressed', 'A'],
-    [' '],
-    [' ', 'display %s', 'display', '?'],
-    [' ', 'plot x %d.rowcol y %d.rowcol', 'plotLED', 0, 0],
-    [' ', 'unplot x %d.rowcol y %d.rowcol', 'unplotLED', 0, 0],
-    ['r', 'point x %d.rowcol y %d.rowcol', 'pointLED', 0, 0],
-    [' ', 'clear display', 'clearDisplay'],
-    [' '],
-    ['r', 'analog read pin %m.analogPins', 'analogReadPin', 0],
-    ['b', 'digital read pin %m.digitalPins', 'digitalReadPin', 0],
-    [' ', 'analog write pin %m.analogPins to %d', 'analogWritePin', 0, 255],
-    [' ', 'digital write pin %m.digitalPins to %m.digitalPinValues', 'digitalWritePin', 0, 'on'],
-    [' ', 'reset pins', 'resetPins'],
-    [' '],
-    ['r', 'temperature', 'temperature'],
-    ['r', 'magnetometer bearing', 'magnetometerBearing'],
-    ['r', 'magnetometer %m.axis', 'magnetometer', 'x'],
-    ['r', 'compass', 'compass'],
-    ['r', 'accelerometer %m.axis', 'accelerometer', 'x'],
-    ['r', 'name', 'deviceName']
-  ];
-
-  var menus = {
-    btns: ['A', 'B', 'any'],
-    // there are no pins 17 and 18.
-    analogPins: [0, 1, 2, 3, 4, 10],
-    digitalPins: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 19, 20],
-    digitalPinValues: ['off', 'on'],
-    axis: ['x', 'y', 'z'],
-    rowcol: [0, 1, 2, 3, 4]
+  // Check for GET param 'lang'
+  var paramString = window.location.search.replace(/^\?|\/$/g, '');
+  var vars = paramString.split("&");
+  var lang = 'en';
+  for (var i = 0; i < vars.length; i++) {
+    var pair = vars[i].split('=');
+    if (pair.length > 1 && pair[0] == 'lang') {
+      lang = pair[1];
+    }
   };
 
+  var blocks = {
+    'en': [
+      ['h', 'when %m.btns button pressed', 'whenButtonPressed', 'A'],
+      [' '],
+      [' ', 'display %s', 'display', '?'],
+      [' ', 'plot x %d.rowcol y %d.rowcol', 'plotLED', 0, 0],
+      [' ', 'unplot x %d.rowcol y %d.rowcol', 'unplotLED', 0, 0],
+      ['r', 'point x %d.rowcol y %d.rowcol', 'pointLED', 0, 0],
+      [' ', 'clear display', 'clearDisplay'],
+      [' '],
+      ['r', 'analog read pin %m.analogPins', 'analogReadPin', 0],
+      ['b', 'digital read pin %m.digitalPins', 'digitalReadPin', 0],
+      [' ', 'analog write pin %m.analogPins to %d', 'analogWritePin', 0, 255],
+      [' ', 'digital write pin %m.digitalPins to %m.digitalPinValues', 'digitalWritePin', 0, 'on'],
+      [' ', 'reset pins', 'resetPins'],
+      [' '],
+      ['r', 'temperature', 'temperature'],
+      ['r', 'magnetometer bearing', 'magnetometerBearing'],
+      ['r', 'magnetometer %m.axis', 'magnetometer', 'x'],
+      ['r', 'compass', 'compass'],
+      ['r', 'accelerometer %m.axis', 'accelerometer', 'x'],
+      ['r', 'device', 'deviceName']
+    ],
+    'pt-br': [
+      ['h', 'Quando o botão %m.btns for pressionado', 'whenButtonPressed', 'A'],
+      [' '],
+      [' ', 'mostre %s', 'display', '?'],
+      [' ', 'marque x %d.rowcol y %d.rowcol', 'plotLED', 0, 0],
+      [' ', 'desmarque x %d.rowcol y %d.rowcol', 'unplotLED', 0, 0],
+      ['r', 'valor do ponto x %d.rowcol y %d.rowcol', 'pointLED', 0, 0],
+      [' ', 'limpe tela', 'clearDisplay'],
+      [' '],
+      ['r', 'leitura analógica do pino %m.analogPins', 'analogReadPin', 0],
+      ['b', 'leitura digital do pino %m.digitalPins', 'digitalReadPin', 0],
+      [' ', 'escrita analógica do pino %m.analogPins para %d', 'analogWritePin', 0, 255],
+      [' ', 'escrita digital pin %m.digitalPins para %m.digitalPinValues', 'digitalWritePin', 0, 'on'],
+      [' ', 'reinicie os pinos', 'resetPins'],
+      [' '],
+      ['r', 'temperatura', 'temperature'],
+      ['r', 'magnetômetro', 'magnetometerBearing'],
+      ['r', 'magnetômetro eixo %m.axis', 'magnetometer', 'x'],
+      ['r', 'bússola', 'compass'],
+      ['r', 'acelerômetro %m.axis', 'accelerometer', 'x'],
+      ['r', 'dispositivo', 'deviceName']
+    ]
+  };
+
+  var menus = {
+    'en': {
+      btns: ['A', 'B', 'any'],
+      // there are no pins 17 and 18.
+      analogPins: [0, 1, 2, 3, 4, 10],
+      digitalPins: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 19, 20],
+      digitalPinValues: ['off', 'on'],
+      axis: ['x', 'y', 'z'],
+      rowcol: [0, 1, 2, 3, 4]
+    },
+    'pt-br': {
+      btns: ['A', 'B', 'qualquer'],
+      // there are no pins 17 and 18.
+      analogPins: [0, 1, 2, 3, 4, 10],
+      digitalPins: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 19, 20],
+      digitalPinValues: ['desligado', 'ligado'],
+      axis: ['x', 'y', 'z'],
+      rowcol: [0, 1, 2, 3, 4]
+    }
+  }
+
   var descriptor = {
-    blocks: blocks,
-    menus: menus,
+    blocks: blocks[lang],
+    menus: menus[lang],
     url: 'https://github.com/jaafreitas/scratch-microbit-extension'
   };
 
