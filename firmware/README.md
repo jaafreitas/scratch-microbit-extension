@@ -1,5 +1,5 @@
 The [firmware](makecode-microbit-scratch-extension.hex) necessary to establish the Scratch and BBC micro:bit communication
-was built using https://makecode.microbit.org
+was built using [https://makecode.microbit.org](https://makecode.microbit.org)
 
 There is a [shared project avaliable here](https://makecode.microbit.org/_MaF8jJVdTDyo)
 
