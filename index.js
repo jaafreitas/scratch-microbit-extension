@@ -56,10 +56,11 @@ io.on('connection', function(socket) {
       }
 
       function subscribe(device, data) {
-        device.subscribePinData(function() {
+        device.subscribePinData(function(error) {
           log(data);
           // It will trigger a pinDataChange.
-          device.readPin(data.pin);
+          device.readPin(data.pin, function(error, value) {
+          });
         });
       };
 
