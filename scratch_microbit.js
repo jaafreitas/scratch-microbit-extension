@@ -89,22 +89,22 @@
 
     socket.on('microbit: name', function(value) {
       microbitDeviceName = value;
-      console.log('microbit: %s', value);
+      // console.log('microbit: %s', value);
     });
 
 
     socket.on('microbit: button A', function(status) {
-      console.log('microbit: button A ' + status);
+      // console.log('microbit: button A ' + status);
       buttonState['A'] = status;
     });
 
     socket.on('microbit: button B', function(status) {
-      console.log('microbit: button B ' + status);
+      // console.log('microbit: button B ' + status);
       buttonState['B'] = status;
     });
 
     socket.on('microbit: pin', function(data) {
-      console.log('microbit: pin %d, value %d', data.pin, data.value);
+      // console.log('microbit: pin %d, value %d', data.pin, data.value);
       pinValue[data.pin] = data.value;
     });
 
@@ -149,7 +149,7 @@
 
   function setupPin(pin, ADmode, IOmode) {
     if ((microbitConnected) && (!pinSetup[pin])) {
-      console.log('microbit: pinSetup %s, ADmode %s, IOmode %s', pin, ADmode, IOmode);
+      // console.log('microbit: pinSetup %s, ADmode %s, IOmode %s', pin, ADmode, IOmode);
       socket.emit('pinSetup', {'pin': pin, 'ADmode': ADmode, 'IOmode': IOmode});
       pinSetup[pin] = true;
     };
@@ -157,7 +157,7 @@
 
   function pinWrite(pin, value) {
     if (microbitConnected) {
-      console.log('microbit: pinWrite %s, value %s', pin, value);
+      // console.log('microbit: pinWrite %s, value %s', pin, value);
       socket.emit('pinWrite', {'pin': pin, 'value': value});
     };
   }
@@ -218,7 +218,7 @@
 
   ext.display = function(value) {
     if (microbitConnected) {
-      console.log('microbit: display %s', value);
+      // console.log('microbit: display %s', value);
       socket.emit('display', value);
     };
   };

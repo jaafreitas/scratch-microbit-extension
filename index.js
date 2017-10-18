@@ -47,7 +47,7 @@ io.on('connection', function(socket) {
   };
 
   socket.on('pinSetup', function(data) {
-    console.log('socket: pinSetup');
+    // console.log('socket: pinSetup');
 
     if (device) {
       function log(data) {
@@ -94,7 +94,7 @@ io.on('connection', function(socket) {
   socket.on('pinWrite', function(data) {
     if (device) {
       device.writePin(data.pin, Math.min(data.value, 255), function(error) {
-        console.log('microbit: < pin %d, value %d', data.pin, data.value);
+        // console.log('microbit: < pin %d, value %d', data.pin, data.value);
       });
     };
   });
@@ -104,7 +104,7 @@ io.on('connection', function(socket) {
       // The string has to be 20 characters or less.
       // https://github.com/sandeepmistry/node-bbc-microbit/blob/master/API.md#write-text
       device.writeLedText(value.substring(0, 20), function(error) {
-        console.log('microbit: display %s', value);
+        // console.log('microbit: display %s', value);
       });
     };
   });
@@ -129,17 +129,17 @@ function microbitFound(microbit) {
   });
 
   microbit.on('buttonAChange', function(value) {
-    console.log('microbit: button A', BUTTON_VALUE_MAPPER[value]);
+    // console.log('microbit: button A', BUTTON_VALUE_MAPPER[value]);
     io.sockets.emit('microbit: button A', value);
   });
 
   microbit.on('buttonBChange', function(value) {
-    console.log('microbit: button B', BUTTON_VALUE_MAPPER[value]);
+    // console.log('microbit: button B', BUTTON_VALUE_MAPPER[value]);
     io.sockets.emit('microbit: button B', value);
   });
 
   microbit.on('pinDataChange', function(pin, value) {
-    console.log('microbit: > pin %d, value %d', pin, value);
+    // console.log('microbit: > pin %d, value %d', pin, value);
     io.sockets.emit('microbit: pin', { 'pin': pin, 'value': value });
   });
 
