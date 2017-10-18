@@ -179,10 +179,13 @@ function microbitFound(microbit) {
       console.log('microbit: subscribed to buttons');
     });
 
+    microbit.writeTemperaturePeriod(1000, function() {
     microbit.subscribeTemperature(function(error) {
       console.log('microbit: subscribed to temperature');
     });
+    });
 
+    microbit.writeMagnetometerPeriod(160, function() {
     microbit.subscribeMagnetometerBearing(function(error) {
       console.log('microbit: subscribed to magnetometer bearing');
     });
@@ -190,9 +193,12 @@ function microbitFound(microbit) {
     microbit.subscribeMagnetometer(function(error) {
       console.log('microbit: subscribed to magnetometer');
     });
+    });
 
+    microbit.writeAccelerometerPeriod(160, function() {
     microbit.subscribeAccelerometer(function(error) {
       console.log('microbit: subscribed to accelerometer');
+    });
     });
 
     io.sockets.emit('microbit: connected', microbitConnected);
