@@ -23,3 +23,10 @@ node -e "var fs = require('fs'), `
 node index.js
 ```
 7. Launch the BBC micro:bit extension in [English](http://scratchx.org/?url=https://jaafreitas.github.io/scratch-microbit-extension/scratch_microbit.js&lang=en) or [Portuguese](http://scratchx.org/?url=https://jaafreitas.github.io/scratch-microbit-extension/scratch_microbit.js&lang=pt-br)
+
+# Examples
+## [Monitor a plant using the analog input pins of a BBC micro:bit.](http://scratchx.org/?url=https://jaafreitas.github.io/scratch-microbit-extension/examples/GardenMonitoring.sbx)
+![Garden Monitoring](examples/GardenMonitoringTooDarkHealthy.png "Garden Monitoring")
+
+## [Check your location using a compass and a BBC micro:bit.](http://scratchx.org/?url=https://jaafreitas.github.io/scratch-microbit-extension/examples/Compass.sbx)
+![Compass](examples/Compass.png "Compass")
