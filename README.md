@@ -5,8 +5,8 @@ Note: This ScratchX BBC micro:bit extension was developed to extend the operatio
 # Getting Started
 Sorry, there is no installer yet, so we need some manual steps.
 1. Download the [makecode-microbit-scratch-extension.hex](firmware/makecode-microbit-scratch-extension.hex) and copy it to the BBC micro:bit using a USB cable.
-2. Get the [Node.js](https://nodejs.org) if you don't have it yet. Some familiarity with this enviroment is necessary.
-3. Clone or download this repository
+2. Get [Node.js](https://nodejs.org) if you don't have it yet. Some familiarity with this enviroment is necessary.
+3. [Clone](https://github.com/jaafreitas/scratch-microbit-extension) or [download](https://github.com/jaafreitas/scratch-microbit-extension/archive/master.zip) this repository
 4. Open a terminal, go to the repository and
 ```
 npm install
