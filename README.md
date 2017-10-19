@@ -30,3 +30,9 @@ node index.js
 
 ## [Check your location using a compass and a BBC micro:bit.](http://scratchx.org/?url=https://jaafreitas.github.io/scratch-microbit-extension/examples/Compass.sbx)
 ![Compass](examples/Compass.png "Compass")
+
+# Technical stuff
+* [firmware](firmware): information about the firmware development.
+* [noble-uwp](https://github.com/jasongin/noble-uwp): library responsible for the bluetooth communication on Windows 10.
+* [node-bbc-microbit](https://github.com/sandeepmistry/node-bbc-microbit): [API](https://github.com/sandeepmistry/node-bbc-microbit/blob/master/API.md) for controling a BBC micro:bit using Node.js
+
