@@ -11,18 +11,11 @@ Sorry, there is no installer yet, so we need some manual steps.
 ```
 npm install
 ```
-5. If you are using this on Windows, you need this aditional step:
-```
-node -e "var fs = require('fs'), `
-  f = 'node_modules/noble-device/lib/util.js'; `
-  fs.writeFileSync(f, fs.readFileSync(f).toString().replace(`
-    'require(\'noble\')', 'require(\'noble-uwp\')'))"
-```
-6. Start the extension with
+5. Start the extension with
 ```
 node index.js
 ```
-7. Launch the BBC micro:bit extension in [English](http://scratchx.org/?url=https://jaafreitas.github.io/scratch-microbit-extension/scratch_microbit.js&lang=en) or [Portuguese](http://scratchx.org/?url=https://jaafreitas.github.io/scratch-microbit-extension/scratch_microbit.js&lang=pt-br)
+6. Launch the BBC micro:bit extension in [English](http://scratchx.org/?url=https://jaafreitas.github.io/scratch-microbit-extension/scratch_microbit.js&lang=en) or [Portuguese](http://scratchx.org/?url=https://jaafreitas.github.io/scratch-microbit-extension/scratch_microbit.js&lang=pt-br)
 
 # Examples
 ## [Monitor a plant using the analog input pins of a BBC micro:bit.](http://scratchx.org/?url=https://jaafreitas.github.io/scratch-microbit-extension/examples/GardenMonitoring.sbx)
@@ -35,4 +28,3 @@ node index.js
 * [firmware](firmware): information about the firmware development.
 * [noble-uwp](https://github.com/jasongin/noble-uwp): library responsible for the bluetooth communication on Windows 10.
 * [node-bbc-microbit](https://github.com/sandeepmistry/node-bbc-microbit): [API](https://github.com/sandeepmistry/node-bbc-microbit/blob/master/API.md) for controling a BBC micro:bit using Node.js
-
