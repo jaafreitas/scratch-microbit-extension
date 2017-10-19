@@ -340,7 +340,7 @@
   var descriptor = {
     blocks: blocks[lang],
     menus: menus[lang],
-    url: 'https://github.com/jaafreitas/scratch-microbit-extension'
+    url: 'https://jaafreitas.github.io/scratch-microbit-extension'
   };
 
   ScratchExtensions.register('BBC micro:bit', descriptor, ext);
