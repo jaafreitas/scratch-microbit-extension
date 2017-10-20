@@ -2,6 +2,8 @@ This [ScratchX](http://scratchx.org/) extension lets you control your [BBC micro
 
 Note: This ScratchX BBC micro:bit extension was developed to extend the operation system plataforms that [oficial extension](https://llk.github.io/microbit-extension/) supports, which only works with Mac OS X at this time.
 
+This extension is known to work on Windows 10 + Chrome, Ubuntu 16.04 + Firefox and Raspberry PI 3 RASPBIAN + Chromium.
+
 # Getting Started
 Sorry, there is no installer yet, so we need some manual steps.
 1. Download the [makecode-microbit-scratch-extension.hex](firmware/makecode-microbit-scratch-extension.hex) and copy it to the BBC micro:bit using a USB cable.
