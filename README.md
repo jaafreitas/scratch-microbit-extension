@@ -1,6 +1,6 @@
 This [ScratchX](http://scratchx.org/) extension lets you control your [BBC micro:bit](https://microbit.org/) wirelessly using [Scratch programming blocks](https://scratch.mit.edu/). You can use this new blocks to design a whole new way of interacting with your Scratch projects.
 
-Note: This ScratchX BBC micro:bit extension was developed on top of the [microbit extehnsion](https://llk.github.io/microbit-extension/) platform, that officialy only supports Mac OS X at this time.
+Note: This ScratchX BBC micro:bit extension was developed to complement the [oficial extension](https://llk.github.io/microbit-extension/), that only supports Mac OS X at this time.
 
 This extension is known to work on Windows 10 + Chrome, Ubuntu 16.04 + Firefox and Raspberry PI 3 Raspbian + Chromium.
 
