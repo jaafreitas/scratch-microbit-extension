@@ -184,7 +184,7 @@
   ext.digitalWritePin = function(pin, value) {
     setupPin(pin, 'digital', 'output');
     // We don't want to deal with translation issues.
-    value = (value == menus.digitalPinValues[1]);
+    value = (value == descriptor.menus.digitalPinValues[1]);
     pinWrite(pin, value);
   };
 
@@ -304,7 +304,7 @@
       ['r', 'leitura analógica do pino %m.analogPins', 'analogReadPin', 0],
       ['b', 'leitura digital do pino %m.digitalPins', 'digitalReadPin', 0],
       [' ', 'escrita analógica do pino %m.analogPins para %d', 'analogWritePin', 0, 255],
-      [' ', 'escrita digital pino %m.digitalPins para %m.digitalPinValues', 'digitalWritePin', 0, 'on'],
+      [' ', 'escrita digital pino %m.digitalPins para %m.digitalPinValues', 'digitalWritePin', 0, 'ligado'],
       [' ', 'reinicie os pinos', 'resetPins'],
       [' '],
       ['r', 'temperatura', 'temperature'],
