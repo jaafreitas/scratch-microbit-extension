@@ -1,6 +1,6 @@
 This [ScratchX](http://scratchx.org/) extension lets you control your [BBC micro:bit](https://microbit.org/) wirelessly using [Scratch programming blocks](https://scratch.mit.edu/). You can use this new blocks to design a whole new way of interacting with your Scratch projects.
 
-Note: This ScratchX BBC micro:bit extension was developed to extend the plataforms that the [oficial extension](https://llk.github.io/microbit-extension/) supports, which only works with Mac OS X at this time.
+Note: This ScratchX BBC micro:bit extension was developed to complement the [oficial extension](https://llk.github.io/microbit-extension/), that only supports Mac OS X at this time.
 
 This extension is known to work on Windows 10 + Chrome, Ubuntu 16.04 + Firefox and Raspberry PI 3 Raspbian + Chromium.
 
@@ -9,7 +9,7 @@ Sorry, there is no installer yet, so we need some manual steps.
 1. Download the [makecode-microbit-scratch-extension.hex](firmware/makecode-microbit-scratch-extension.hex) and copy it to the BBC micro:bit using a USB cable.
 2. Get [Node.js](https://nodejs.org) if you don't have it yet. Some familiarity with this tool may be necessary.
 3. [Clone](https://github.com/jaafreitas/scratch-microbit-extension) or [download](https://github.com/jaafreitas/scratch-microbit-extension/archive/master.zip) this repository
-4. Open a terminal, go to the repository and
+4. Open a terminal window, go to the repository and
 ```
 npm install
 ```
@@ -23,7 +23,7 @@ node index.js
 ## [Monitor a plant using the analog input pins of a BBC micro:bit.](http://scratchx.org/?url=https://jaafreitas.github.io/scratch-microbit-extension/examples/GardenMonitoring.sbx)
 ![Garden Monitoring](examples/GardenMonitoringTooDarkHealthy.png "Garden Monitoring")
 
-## [Check your location using a compass and a BBC micro:bit.](http://scratchx.org/?url=https://jaafreitas.github.io/scratch-microbit-extension/examples/Compass.sbx)
+## [Check your orientation using a compass and a BBC micro:bit.](http://scratchx.org/?url=https://jaafreitas.github.io/scratch-microbit-extension/examples/Compass.sbx)
 ![Compass](examples/Compass.png "Compass")
 
 # Technical stuff
