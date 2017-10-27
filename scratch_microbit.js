@@ -304,7 +304,7 @@
       ['r', 'leitura analógica do pino %m.analogPins', 'analogReadPin', 0],
       ['b', 'leitura digital do pino %m.digitalPins', 'digitalReadPin', 0],
       [' ', 'escrita analógica do pino %m.analogPins para %d', 'analogWritePin', 0, 255],
-      [' ', 'escrita digital pin %m.digitalPins para %m.digitalPinValues', 'digitalWritePin', 0, 'on'],
+      [' ', 'escrita digital pino %m.digitalPins para %m.digitalPinValues', 'digitalWritePin', 0, 'on'],
       [' ', 'reinicie os pinos', 'resetPins'],
       [' '],
       ['r', 'temperatura', 'temperature'],
